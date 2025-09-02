@@ -13,7 +13,7 @@ function PaymentContent() {
   const service = searchParams.get('service') || 'Неизвестная услуга';
   const price = searchParams.get('price');
 
-  const formattedPrice = price ? new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(Number(price)) : 'N/A';
+  const formattedPrice = price ? new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'KZT', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(Number(price)) : 'N/A';
   
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-background p-4">
