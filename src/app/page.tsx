@@ -56,7 +56,7 @@ export default function Home() {
           </div>
         </ScrollArea>
         <footer className="p-3 text-center text-xs text-muted-foreground border-t bg-card">
-          <p>Выберите услугу для перехода к оплате</p>
+          <p>Выберите гайд для перехода к оплате</p>
         </footer>
       </div>
     </main>
