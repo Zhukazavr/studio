@@ -28,8 +28,8 @@ export function ServiceCard({ icon: Icon, title, description, price }: ServiceCa
           <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
         </div>
         <div className="flex-1 min-w-0">
-          <h3 className="font-semibold font-headline text-card-foreground truncate">{title}</h3>
-          {description && <p className="text-xs text-muted-foreground mt-1 truncate">{description}</p>}
+          <h3 className="font-semibold font-headline text-card-foreground whitespace-normal">{title}</h3>
+          {description && <p className="text-xs text-muted-foreground mt-1 whitespace-normal">{description}</p>}
         </div>
         <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
           <Badge variant="secondary" className="text-sm py-1 px-3 rounded-md">{formattedPrice} тыс.</Badge>
