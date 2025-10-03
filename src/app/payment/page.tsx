@@ -1,17 +1,25 @@
 'use client';
 
-import { Suspense } from 'react';
+import { Suspense, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, CreditCard } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 function PaymentContent() {
   const searchParams = useSearchParams();
   const service = searchParams.get('service') || 'Неизвестный продукт';
   const price = searchParams.get('price');
+
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [phone, setPhone] = useState('');
+
+  const isFormValid = firstName.trim() !== '' && lastName.trim() !== '' && phone.trim() !== '';
 
   const formattedPrice = price ? new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'KZT', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(Number(price)) : 'N/A';
   
@@ -23,11 +31,23 @@ function PaymentContent() {
           <CardDescription>Пожалуйста, проверьте детали и перейдите к оплате.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="flex justify-between items-start border-t border-b py-4 gap-4">
+          <div className="flex justify-between items-start border-t pt-4 gap-4">
             <span className="text-muted-foreground whitespace-nowrap">Продукт:</span>
             <span className="font-semibold text-right">{service}</span>
           </div>
-          <div className="flex justify-between items-center text-xl">
+           <div className="space-y-2">
+            <Label htmlFor="firstName">Имя</Label>
+            <Input id="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} placeholder="Иван" required />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="lastName">Фамилия</Label>
+            <Input id="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} placeholder="Иванов" required />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="phone">Номер телефона</Label>
+            <Input id="phone" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+7 (777) 123-45-67" required />
+          </div>
+          <div className="flex justify-between items-center text-xl border-t pt-4">
             <span className="font-bold">К оплате:</span>
             <span className="font-bold text-primary-foreground bg-primary/90 rounded-md px-3 py-1">{formattedPrice}</span>
           </div>
@@ -39,7 +59,7 @@ function PaymentContent() {
               Назад
             </Link>
           </Button>
-          <Button className="w-full">
+          <Button className="w-full" disabled={!isFormValid}>
             <CreditCard className="mr-2 h-4 w-4" />
             Оплатить (скоро)
           </Button>
@@ -62,7 +82,19 @@ function PaymentSkeleton() {
                         <Skeleton className="h-5 w-1/4" />
                         <Skeleton className="h-5 w-1/2" />
                     </div>
-                    <div className="flex justify-between items-center text-xl">
+                     <div className="space-y-2">
+                        <Skeleton className="h-4 w-1/4" />
+                        <Skeleton className="h-10 w-full" />
+                    </div>
+                     <div className="space-y-2">
+                        <Skeleton className="h-4 w-1/4" />
+                        <Skeleton className="h-10 w-full" />
+                    </div>
+                     <div className="space-y-2">
+                        <Skeleton className="h-4 w-1/3" />
+                        <Skeleton className="h-10 w-full" />
+                    </div>
+                    <div className="flex justify-between items-center text-xl border-t pt-4">
                         <Skeleton className="h-6 w-1/3" />
                         <Skeleton className="h-8 w-1/4" />
                     </div>
