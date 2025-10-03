@@ -21,7 +21,7 @@ export function ServiceCard({ icon: Icon, title, description, price }: ServiceCa
     <Link 
       href={`/payment?service=${serviceQueryParam}&price=${priceQueryParam}`} 
       className="block group"
-      aria-label={`Перейти к услуге ${title}`}
+      aria-label={`Перейти к продукту ${title}`}
     >
       <Card className="p-3 flex items-center gap-4 transition-all duration-300 ease-in-out hover:bg-accent hover:shadow-lg hover:-translate-y-0.5">
         <div className="bg-primary/10 text-primary p-3 rounded-lg">

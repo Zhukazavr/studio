@@ -10,7 +10,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 function PaymentContent() {
   const searchParams = useSearchParams();
-  const service = searchParams.get('service') || 'Неизвестная услуга';
+  const service = searchParams.get('service') || 'Неизвестный продукт';
   const price = searchParams.get('price');
 
   const formattedPrice = price ? new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'KZT', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(Number(price)) : 'N/A';
@@ -24,7 +24,7 @@ function PaymentContent() {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex justify-between items-start border-t border-b py-4 gap-4">
-            <span className="text-muted-foreground whitespace-nowrap">Услуга:</span>
+            <span className="text-muted-foreground whitespace-nowrap">Продукт:</span>
             <span className="font-semibold text-right">{service}</span>
           </div>
           <div className="flex justify-between items-center text-xl">
