@@ -29,7 +29,7 @@ function PaymentContent() {
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value.replace(/\D/g, ''); // Remove all non-digits
-    
+
     if (value.startsWith('7') || value.startsWith('8')) {
         if (value.length > 1) {
             value = '7' + value.substring(1);
@@ -53,7 +53,7 @@ function PaymentContent() {
     if (value.length >= 10) {
       formattedPhone += '-' + value.substring(9, 11);
     }
-    
+
     setPhone(formattedPhone.substring(0, 18));
   };
 
@@ -61,7 +61,7 @@ function PaymentContent() {
   const isFormValid = firstName.trim() !== '' && lastName.trim() !== '' && phone.length > 10;
 
   const formattedPrice = price ? new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'KZT', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(Number(price)) : 'N/A';
-  
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-background p-4">
       <Card className="w-full max-w-md shadow-lg">
@@ -89,6 +89,9 @@ function PaymentContent() {
           <div className="flex justify-between items-center text-xl border-t pt-4">
             <span className="font-bold">К оплате:</span>
             <span className="font-bold text-primary-foreground bg-primary/90 rounded-md px-3 py-1">{formattedPrice}</span>
+          </div>
+          <div className="flex justify-between items-center text-xl border-t pt-4">
+            <Link href="https://pay.kaspi.kz/pay/4nxkybt1">Kaspi</Link>
           </div>
         </CardContent>
         <CardFooter className="flex flex-col sm:flex-row gap-2">
