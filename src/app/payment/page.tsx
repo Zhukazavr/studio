@@ -19,7 +19,46 @@ function PaymentContent() {
   const [lastName, setLastName] = useState('');
   const [phone, setPhone] = useState('');
 
-  const isFormValid = firstName.trim() !== '' && lastName.trim() !== '' && phone.trim() !== '';
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>, setter: React.Dispatch<React.SetStateAction<string>>) => {
+    const value = e.target.value;
+    // Allow only Cyrillic and Latin letters
+    if (/^[a-zA-Zа-яА-Я\s-]*$/.test(value)) {
+      setter(value);
+    }
+  };
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.replace(/\D/g, ''); // Remove all non-digits
+    
+    if (value.startsWith('7') || value.startsWith('8')) {
+        if (value.length > 1) {
+            value = '7' + value.substring(1);
+        } else {
+            value = '7';
+        }
+    } else if (value.length > 0) {
+        value = '7' + value;
+    }
+
+    let formattedPhone = '+7';
+    if (value.length > 1) {
+      formattedPhone += ' (' + value.substring(1, 4);
+    }
+    if (value.length >= 5) {
+      formattedPhone += ') ' + value.substring(4, 7);
+    }
+    if (value.length >= 8) {
+      formattedPhone += '-' + value.substring(7, 9);
+    }
+    if (value.length >= 10) {
+      formattedPhone += '-' + value.substring(9, 11);
+    }
+    
+    setPhone(formattedPhone.substring(0, 18));
+  };
+
+
+  const isFormValid = firstName.trim() !== '' && lastName.trim() !== '' && phone.length > 10;
 
   const formattedPrice = price ? new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'KZT', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(Number(price)) : 'N/A';
   
@@ -37,15 +76,15 @@ function PaymentContent() {
           </div>
            <div className="space-y-2">
             <Label htmlFor="firstName">Имя</Label>
-            <Input id="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} placeholder="Иван" required />
+            <Input id="firstName" value={firstName} onChange={(e) => handleNameChange(e, setFirstName)} placeholder="Имя" required />
           </div>
           <div className="space-y-2">
             <Label htmlFor="lastName">Фамилия</Label>
-            <Input id="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} placeholder="Иванов" required />
+            <Input id="lastName" value={lastName} onChange={(e) => handleNameChange(e, setLastName)} placeholder="Фамилия" required />
           </div>
           <div className="space-y-2">
             <Label htmlFor="phone">Номер телефона</Label>
-            <Input id="phone" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+7 (777) 123-45-67" required />
+            <Input id="phone" type="tel" value={phone} onChange={handlePhoneChange} placeholder="+7 (777) 123-45-67" required />
           </div>
           <div className="flex justify-between items-center text-xl border-t pt-4">
             <span className="font-bold">К оплате:</span>
